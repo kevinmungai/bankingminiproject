@@ -15,21 +15,21 @@ import scala.io.StdIn
 
 object Main  extends App {
 
-  import Bank._
-
-
-  val host = "localhost"
-  val port = 8080
 
   implicit val actorSystem = ActorSystem("bank")
   implicit val actorMaterializer = ActorMaterializer()
   implicit val executionContext = actorSystem.dispatcher
 
+  val host = actorSystem.settings.config.getString("http.host") // Gets the host and a port from the configuration
+  val port = actorSystem.settings.config.getInt("http.port")
+
+  import Bank._
+
   val bank = actorSystem.actorOf(Bank.props, "bank-actor")
 
   val route: Route = {
 
-    implicit val timeout = Timeout(20 seconds)
+    implicit val timeout = Timeout(5 seconds)
 
     path("balance") {
       get {
@@ -42,6 +42,7 @@ object Main  extends App {
       }
     }
   }
+
 
 
   val bindingFuture = Http().bindAndHandle(route, host, port)

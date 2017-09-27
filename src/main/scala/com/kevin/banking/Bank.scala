@@ -17,6 +17,12 @@ object Bank {
 
 class Bank extends Actor with ActorLogging {
 
+  //Assists in debugging the actor lifecycle
+
+  override def preStart(): Unit = log.info("Starting the Bank Account actor")
+
+  override def postStop(): Unit = log.info("Stopping the Bank Account actor")
+
   import Bank._
 
   var balance = 0
