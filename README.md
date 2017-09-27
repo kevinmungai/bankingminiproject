@@ -1,0 +1,2 @@
+### BankAccount MiniProject
+The goal of this mini project is to write a simple microwebservice to mimic a “BankAccount”. Through this webservice,one can query about the balance,deposit money,and withdraw money.
